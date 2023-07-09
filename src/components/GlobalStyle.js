@@ -13,8 +13,8 @@ export const GlobalStyle = createGlobalStyle`
 html {
   font-size: 62.5%;
   /* scroll-behavior: smooth; */
-  /* 1rem = 10px */
-  overflow-x: hidden;
+  /* 1rem = 10px 
+  overflow-x: hidden;*/ 
 }
 
 body {
@@ -68,7 +68,7 @@ h3 {
 
 p, button {
   color: ${({ theme }) => theme.colors.text};
-  font-size: 1.65rem;
+  font-size: 1.5rem;
   line-height: 1.5;
   font-weight:400;
 }
@@ -91,7 +91,7 @@ ${"" /* resuable code section  */}
 
 .grid {
   display: grid;
-  gap: 9rem;
+  gap: 5rem;
 }
 
 .grid-two-column {

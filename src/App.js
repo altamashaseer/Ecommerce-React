@@ -9,12 +9,14 @@ import Cart from "./components/Cart";
 import ErrorPage from "./components/ErrorPage";
 import { GlobalStyle } from "./components/GlobalStyle";
 import { ThemeProvider } from "styled-components";
+import Header from "./components/Header";
 
 function App() {
 
   const theme = {
     colors: {
       bg: "#F6F8FA",
+      helper:'purple',
       footer_bg: "#0a1435",
       btn: "rgb(98 84 243)",
       border: "rgba(98, 84, 243, 0.5)",
@@ -29,22 +31,23 @@ function App() {
     }
   }
 
-return (
-  <ThemeProvider theme={theme}>
-    <BrowserRouter>
-      <GlobalStyle />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/singleproduct/:id" element={<SingleProduct />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
-    </BrowserRouter>
-  </ThemeProvider>
-);
+  return (
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <GlobalStyle />
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/singleproduct/:id" element={<SingleProduct />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
+  );
 }
 
 export default App;

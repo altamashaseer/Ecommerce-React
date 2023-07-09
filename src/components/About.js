@@ -1,9 +1,13 @@
 import React from 'react'
 
-const About = () => {
-  return (
-    <div>About</div>
-  )
-}
+import HeroSection from "./HeroSection";
 
-export default About
+const About = () => {
+  const data = {
+    name: "Thapa Ecommerce",
+  };
+
+  return <HeroSection myData={data} />;
+};
+
+export default About;
