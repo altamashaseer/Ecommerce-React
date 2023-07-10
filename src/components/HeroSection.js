@@ -38,7 +38,7 @@ const HeroSection = ({ myData }) => {
 };
 
 const Wrapper = styled.section`
-  padding: 12rem 16rem;
+  padding: 12rem 10rem;
 
   img {
     min-width: 5rem;
