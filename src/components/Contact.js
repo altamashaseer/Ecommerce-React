@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React, { useState } from "react";
-import {Button} from './styles/Button'
+import { Button } from './styles/Button'
 
 const Wrapper = styled.section`
   padding: 9rem 0 5rem 0;
@@ -17,18 +17,6 @@ const Wrapper = styled.section`
         display: flex;
         flex-direction: column;
         gap: 3rem;
-
-        // input[type="submit"] {
-        //   cursor: pointer;
-        //   transition: all 0.2s;
-
-        //   &:hover {
-        //     background-color: ${({ theme }) => theme.colors.white};
-        //     border: 1px solid ${({ theme }) => theme.colors.btn};
-        //     color: ${({ theme }) => theme.colors.btn};
-        //     transform: scale(0.9);
-        //   }
-        // }
       }
     }
   }
@@ -40,6 +28,7 @@ const Contact = () => {
     email: "",
     message: "",
   });
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -60,6 +49,7 @@ const Contact = () => {
         if (response.ok) {
           // Email sent successfully
           console.log("Email sent!");
+          setShowSuccessMessage(true);
           // Reset the form fields
           setFormData({
             name: "",
@@ -93,7 +83,6 @@ const Contact = () => {
       <div className="container">
         <div className="contact-form">
           <form onSubmit={handleSubmit} className="contact-inputs">
-
             <input
               type="text"
               id="name"
@@ -121,6 +110,7 @@ const Contact = () => {
             ></textarea>
             <Button type="submit">Submit</Button>
           </form>
+          {showSuccessMessage && <p className="success-message" style={{marginTop:"5rem"}}>Message sent successfully!</p>}
         </div>
       </div>
     </Wrapper>
