@@ -11,6 +11,8 @@ const initialState = {
   isError: false,
   products: [],
   featureProducts: [],
+  isSingleLoading: false,
+  singleProduct: {},
 }
 
 // const productReducer = () => {
@@ -33,11 +35,25 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  // SINGLE PRODUCT 
+  const getSingleProduct = async (url) => {
+    try {
+      dispatch({type:"SET_SINGLE_LOADING"})
+      const res = await axios.get(url)
+      const singleProduct = await res.data;
+      dispatch({ type: "SET_SINGLE_PRODUCT", payload: singleProduct })
+    } catch (error) {
+      dispatch({ type: "SET_SINGLE_ERROR" })
+    }
+  }
+
   useEffect(() => {
     getProducts(API);
   }, [])
 
-  return <AppContext.Provider value={{ ...state }}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={{ ...state, getSingleProduct }}>
+    {children}
+  </AppContext.Provider>;
 };
 
 // Custom Hook
