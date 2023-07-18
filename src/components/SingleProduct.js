@@ -8,6 +8,7 @@ import { Container } from "./styles/Container";
 import { MdSecurity } from "react-icons/md";
 import { TbTruckDelivery, TbReplace } from "react-icons/tb";
 import FormatPrice from "../helpers/FormatPrice";
+import Stars from "./Stars";
 
 const API = "https://api.pujakaitem.com/api/products";
 
@@ -17,7 +18,9 @@ const SingleProduct = () => {
     isSingleLoading,
     singleProduct,
   } = useProductContext();
+
   const { id } = useParams();
+  
   const {
     id: alias,
     name,
@@ -54,8 +57,7 @@ const SingleProduct = () => {
           {/* product data  */}
           <div className="product-data">
             <h2>{name}</h2>
-            <p>{stars}</p>
-            <p>{reviews} reviews</p>
+            <Stars stars={stars} reviews={reviews} />
             <p className="product-data-price">
               MRP:
               <del>
@@ -100,6 +102,8 @@ const SingleProduct = () => {
                 Brand :<span> {company} </span>
               </p>
             </div>
+            <hr />
+            {stock>0 && <AddToCart product={singleProduct}/>}
           </div>
         </div>
       </Container>
