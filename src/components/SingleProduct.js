@@ -9,6 +9,8 @@ import { MdSecurity } from "react-icons/md";
 import { TbTruckDelivery, TbReplace } from "react-icons/tb";
 import FormatPrice from "../helpers/FormatPrice";
 import Stars from "./Stars";
+import AddToCart from "./AddToCart"
+
 
 const API = "https://api.pujakaitem.com/api/products";
 
