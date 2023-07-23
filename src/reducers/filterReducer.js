@@ -43,7 +43,76 @@ const filterReducer = (state, action) => {
       return {
         ...state,
         filter_products: sortedProducts,
-        // sorting: payload 
+      };
+
+    case "SET_SEARCH_TERM":
+      const term = action.payload;
+      const filteredProducts = state.filter_products.filter(product => product.name.toLowerCase().includes(term.toLowerCase()));
+
+      return {
+        ...state,
+        filter_products: filteredProducts,
+        filters: {
+          ...state.filters,
+          text: term,
+        }
+      };
+    case "FILTER_BY_CATEGORY":
+      const selectedCategory = action.payload;
+      const filteredByCategory = state.all_products.filter(
+        (product) => product.category === selectedCategory
+      );
+
+      return {
+        ...state,
+        filter_products: filteredByCategory,
+        filters: {
+          ...state.filters,
+          category: selectedCategory,
+        },
+      };
+
+    case "FILTER_BY_COLOR":
+      const selectedColor = action.payload;
+      const filteredByColor = state.all_products.filter((product) =>
+        product.colors.includes(selectedColor)
+      );
+
+      return {
+        ...state,
+        filter_products: filteredByColor,
+        filters: {
+          ...state.filters,
+          color: selectedColor,
+        },
+      };
+
+    case "FILTER_BY_COMPANY":
+      const selectedCompany = action.payload;
+      const filteredByCompany = state.all_products.filter(
+        (product) => product.company === selectedCompany
+      );
+
+      return {
+        ...state,
+        filter_products: filteredByCompany,
+        filters: {
+          ...state.filters,
+          company: selectedCompany,
+        },
+      };
+
+    // Reset filters
+    case "RESET_FILTERS":
+      return {
+        ...state,
+        filters: {
+          text: "",
+          category: "all",
+          company: "all",
+          color: "all",
+        },
+        filter_products: [...state.all_products],
       };
 
     default:

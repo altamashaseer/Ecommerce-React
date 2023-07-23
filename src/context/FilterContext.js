@@ -9,6 +9,11 @@ const initialState = {
     all_products: [],
     grid_view: true,
     sorting: "",
+    filters: {
+        category: "All",
+        company: "All",
+        color: "All",
+    },
 };
 
 
@@ -30,14 +35,51 @@ const FilterProvider = ({ children }) => {
     const setListView = () => {
         return dispatch({ type: "SET_LIST_VIEW" });
     };
+
+    //sorting
     const setSortingOption = (option) => {
         dispatch({ type: "SET_SORTING_OPTION", payload: option });
     };
 
+    // Set search term
+    const setSearchTerm = (term) => {
+        dispatch({ type: "SET_SEARCH_TERM", payload: term });
+    };
+
+    // Filter by category
+    const filterByCategory = (category) => {
+        dispatch({ type: "FILTER_BY_CATEGORY", payload: category });
+    };
+
+    // Filter by color
+    const filterByColor = (color) => {
+        dispatch({ type: "FILTER_BY_COLOR", payload: color });
+    };
+
+    // Filter by company
+    const filterByCompany = (company) => {
+        dispatch({ type: "FILTER_BY_COMPANY", payload: company });
+    };
+
+    // Reset filters
+    const resetFilters = () => {
+        dispatch({ type: "RESET_FILTERS" });
+    };
 
 
     return (
-        <FilterContext.Provider value={{ ...state, setGridView, setListView, setSortingOption }} >
+        <FilterContext.Provider value={{
+            ...state,
+            // state,
+            setGridView,
+            setListView,
+            setSortingOption,
+            setSearchTerm,
+            filterByCategory,
+            filterByColor,
+            filterByCompany,
+            resetFilters,
+        }} >
             {children}
         </FilterContext.Provider>
     )

@@ -35,7 +35,6 @@ const Sort = () => {
       </div>
 
       {/* 3rd column  */}
-
       <div className="sort-selection">
         <select className="sort-selection--style" value={sorting} onChange={handleSortingChange}>
           <option value="default">Relevance</option>
