@@ -13,6 +13,9 @@ const initialState = {
         category: "All",
         company: "All",
         color: "All",
+        minPrice: 0,
+        maxPrice: 0,
+        price: 0,
     },
 };
 
@@ -60,17 +63,20 @@ const FilterProvider = ({ children }) => {
     const filterByCompany = (company) => {
         dispatch({ type: "FILTER_BY_COMPANY", payload: company });
     };
-
+    //filter by price 
+    const filterByPrice = (price) => {
+        dispatch({ type: "FILTER_BY_PRICE", payload: price })
+    }
     // Reset filters
     const resetFilters = () => {
         dispatch({ type: "RESET_FILTERS" });
     };
 
 
+
     return (
         <FilterContext.Provider value={{
             ...state,
-            // state,
             setGridView,
             setListView,
             setSortingOption,
@@ -78,6 +84,7 @@ const FilterProvider = ({ children }) => {
             filterByCategory,
             filterByColor,
             filterByCompany,
+            filterByPrice,
             resetFilters,
         }} >
             {children}

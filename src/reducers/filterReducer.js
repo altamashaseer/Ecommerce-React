@@ -57,6 +57,7 @@ const filterReducer = (state, action) => {
           text: term,
         }
       };
+
     case "FILTER_BY_CATEGORY":
       const selectedCategory = action.payload;
       const filteredByCategory = state.all_products.filter(
@@ -102,7 +103,27 @@ const filterReducer = (state, action) => {
         },
       };
 
-    // Reset filters
+
+    case "FILTER_BY_PRICE":
+      const { minPrice, maxPrice, price } = action.payload;
+
+      // Filter products based on the selected price range
+      const filteredProductByPrice = state.all_products.filter((product) => {
+        const productPrice = product.price;
+        return productPrice <= price;
+      });
+
+      return {
+        ...state,
+        filter_products: filteredProductByPrice,
+        filters: {
+          ...state.filters,
+          price: price,
+          minPrice: minPrice,
+          maxPrice: maxPrice,
+        },
+      };
+
     case "RESET_FILTERS":
       return {
         ...state,

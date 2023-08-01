@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFilterContext } from "../context/FilterContext";
 import { styled } from "styled-components";
 import { Button } from './styles/Button'
@@ -11,18 +11,44 @@ const FilterSection = () => {
     filterByCompany,
     resetFilters,
     filter_products,
+    filterByPrice,
     filters,
   } = useFilterContext();
+
+  // Extract categories, colors, and companies from filter_products
+  const categories = [...new Set(filter_products.map((product) => product.category))];
+  const colors = [...new Set(filter_products.flatMap((product) => product.colors))];
+  const companies = [...new Set(filter_products.map((product) => product.company))];
+
+  const maxPriceEx = Math.max(...filter_products.map((product) => product.price));
+  const minPriceEx = Math.min(...filter_products.map((product) => product.price));
+
+
+
+  const { minPrice, maxPrice, price } = filters;
 
   const handleSearch = (event) => {
     const searchInput = event.target.value;
     setSearchTerm(searchInput);
   };
 
-  // Extract categories, colors, and companies from filter_products
-  const categories = [...new Set(filter_products.map((product) => product.category))];
-  const colors = [...new Set(filter_products.flatMap((product) => product.colors))];
-  const companies = [...new Set(filter_products.map((product) => product.company))];
+  const handlePriceFilter = (event) => {
+    const newPriceValue = event.target.value;
+    filterByPrice({ minPrice: minPriceEx, maxPrice: maxPriceEx, price: newPriceValue });
+  };
+
+  const setPrices = () => {
+    filterByPrice({ minPrice: minPriceEx, maxPrice: maxPriceEx, price: maxPriceEx });
+  };
+
+  useEffect(() => {
+    setPrices();
+    // filterByPrice({ minPrice: minPriceEx, maxPrice: maxPriceEx, price: price });
+    console.log("🚀 ~ file: FilterSection.js:43 ~ useEffect ~ price:", price)
+    console.log("🚀 ~ file: FilterSection.js:43 ~ useEffect ~ minPrice:", minPrice)
+    console.log("🚀 ~ file: FilterSection.js:43 ~ useEffect ~ maxPrice:", maxPrice)
+  }, [maxPriceEx]);
+
 
   const handleResetFilters = () => {
     resetFilters();
@@ -85,6 +111,25 @@ const FilterSection = () => {
         </div>
       </div>
 
+      <div className="filter-price">
+        <h3>Price Range</h3>
+        <PriceSlider>
+          <div className="price-slider-range">
+            <span>{minPrice / 100}</span>
+            <input
+              type="range"
+              min={minPriceEx}
+              max={maxPriceEx} // Use the fetched maxPrice as the maximum value
+              value={price}
+              onChange={handlePriceFilter}
+            />
+            <span>{maxPrice / 100}</span>
+          </div>
+          <div className="price-slider-value">
+            <span>{price / 100}</span>
+          </div>
+        </PriceSlider>
+      </div>
 
 
       <div className="filter-reset">
@@ -95,6 +140,9 @@ const FilterSection = () => {
     </Wrapper>
   );
 };
+
+
+export default FilterSection
 
 const Wrapper = styled.section`
   padding: 5rem 0;
@@ -203,4 +251,54 @@ const Wrapper = styled.section`
   }
 `;
 
-export default FilterSection
+const PriceSlider = styled.div`
+  .price-slider-range {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      flex: 0.3;
+      font-size: 1.2rem;
+      color: #777;
+    }
+
+    input[type="range"] {
+      flex: 1;
+      margin: 0 0.5rem;
+      padding: 0;
+      box-shadow: none;
+      cursor: pointer;
+      -webkit-appearance: none;
+      background: transparent;
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 16px;
+        height: 16px;
+        background: #000;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-top: -5px;
+      }
+
+      &::-webkit-slider-runnable-track {
+        height: 5px;
+        background: #ccc;
+        border-radius: 10px;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .price-slider-value {
+    text-align: center;
+    span {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+  }
+`;
